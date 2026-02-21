@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misba Gazi | Designer Jewellery Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --pink: #ff2d75; --dark: #1a1a1a; --gold: #d4af37; --anti: #2c3e50; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #fff; color: var(--dark); overflow-x: hidden; scroll-behavior: smooth; }
+
+        header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--pink); text-transform: uppercase; }
+        .nav-icons { display: flex; gap: 20px; align-items: center; cursor: pointer; }
+        .cart-count { position: absolute; top: -8px; right: -10px; background: var(--pink); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; }
+
+        /* Anti-Tarnish Banner */
+        .anti-tarnish-banner { background: var(--anti); color: white; text-align: center; padding: 15px; font-size: 14px; letter-spacing: 1px; }
+
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .cat-title { margin: 50px 0 20px; font-size: 24px; font-weight: 700; border-left: 5px solid var(--pink); padding-left: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .cat-title span { font-size: 14px; color: var(--pink); cursor: pointer; }
+
+        /* Jewellery Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .j-card { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; transition: 0.3s; position: relative; }
+        .j-card:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .badge { position: absolute; top: 10px; left: 10px; background: var(--gold); color: white; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; z-index: 5; }
+        .anti-badge { background: #00b894; }
+        
+        .img-box { height: 250px; width: 100%; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .j-info { padding: 15px; text-align: center; }
+        .j-name { font-size: 16px; font-weight: 600; margin-bottom: 5px; height: 40px; overflow: hidden; }
+        .j-price { color: var(--pink); font-size: 18px; font-weight: 700; }
+        .add-btn { background: var(--dark); color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; margin-top: 10px; cursor: pointer; font-size: 14px; }
+        .add-btn:hover { background: var(--pink); }
+
+        /* Cart Sidebar */
+        #cartSidebar { position: fixed; right: -100%; top: 0; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        #cartSidebar.active { right: 0; }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+
+        /* Order Form */
+        .order-form { margin-top: 20px; background: #fdf2f5; padding: 15px; border-radius: 10px; }
+        .order-form input, .order-form textarea { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 5px; }
+        .buy-btn { background: #25D366; color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 40px 20px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="anti-tarnish-banner">✨ NEW: ANTI-TARNISH JEWELLERY (WATERPROOF & NO COLOR FADE) ✨</div>
+
+<header>
+    <div class="logo">Misba Gazi</div>
+    <div class="nav-icons" onclick="toggleCart()">
+        <div style="position:relative">
+            <i class="fas fa-shopping-bag" style="font-size:24px;"></i>
+            <span class="cart-count" id="count">0</span>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    
+    <div class="cat-title">Anti-Tarnish Collection <span>View All ></span></div>
+    <div class="grid">
+        <div class="j-card">
+            <div class="badge anti-badge">WATERPROOF</div>
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400"></div>
+            <div class="j-info">
+                <div class="j-name">Dainty Gold Evil Eye Necklace</div>
+                <div class="j-price">₹1,250</div>
+                <button class="add-btn" onclick="addToCart('Anti-Tarnish Evil Eye Necklace', 1250)">Add to Bag</button>
+            </div>
+        </div>
+        <div class="j-card">
+            <div class="badge anti-badge">NO FADE</div>
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?w=400"></div>
+            <div class="j-info">
+                <div class="j-name">Premium Snake Chain Bracelet</div>
+                <div class="j-price">₹999</div>
+                <button class="add-btn" onclick="addToCart('Snake Chain Bracelet', 999)">Add to Bag</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cat-title">Statement Earrings <span>View All ></span></div>
+    <div class="grid">
+        <div class="j-card">
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400"></div>
+            <div class="j-info">
+                <div class="j-name">Korean Pearl Drop Earrings</div>
+                <div class="j-price">₹450</div>
+                <button class="add-btn" onclick="addToCart('Korean Pearl Earrings', 450)">Add to Bag</button>
+            </div>
+        </div>
+        <div class="j-card">
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1635767798638-3e25273a8236?w=400"></div>
+            <div class="j-info">
+                <div class="j-name">Golden Hoop Party Wear</div>
+                <div class="j-price">₹350</div>
+                <button class="add-btn" onclick="addToCart('Golden Hoops', 350)">Add to Bag</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cat-title">Designer Rings <span>View All ></span></div>
+    <div class="grid">
+        <div class="j-card">
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400"></div>
+            <div class="j-info">
+                <div class="j-name">Adjustable Butterfly Ring</div>
+                <div class="j-price">₹299</div>
+                <button class="add-btn" onclick="addToCart('Butterfly Ring', 299)">Add to Bag</button>
+            </div>
+        </div>
+        <div class="j-card">
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1544450295-a82e707df75a?w=400"></div>
+            <div class="j-info">
+                <div class="j-name">Diamond Studded Minimal Ring</div>
+                <div class="j-price">₹599</div>
+                <button class="add-btn" onclick="addToCart('Minimal Ring', 599)">Add to Bag</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="cartSidebar">
+    <h3>Shopping Bag</h3>
+    <hr style="margin:15px 0;">
+    <div id="cartItems" style="max-height: 350px; overflow-y: auto;"></div>
+    <h4 style="margin:20px 0;">Total: ₹<span id="totalPrice">0</span></h4>
+    
+    <div class="order-form">
+        <input type="text" id="uName" placeholder="Customer Name">
+        <input type="tel" id="uPhone" placeholder="WhatsApp Number">
+        <textarea id="uAddr" placeholder="Delivery Address"></textarea>
+        <button class="buy-btn" onclick="sendToWA()">Confirm Order on WhatsApp</button>
+    </div>
+    <button onclick="toggleCart()" style="margin-top:10px; width:100%; border:none; background:none; cursor:pointer;">Back to Shop</button>
+</div>
+
+<footer>
+    <h2>MISBA GAZI</h2>
+    <p>Handpicked Jewellery for Every Occasion</p>
+    <div style="margin-top:20px; font-size: 20px;">
+        <i class="fab fa-instagram"></i> <i class="fab fa-whatsapp"></i>
+    </div>
+</footer>
+
+<script>
+    let cart = [];
+
+    function toggleCart() {
+        document.getElementById('cartSidebar').classList.toggle('active');
+    }
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        updateCart();
+        toggleCart();
+    }
+
+    function updateCart() {
+        const items = document.getElementById('cartItems');
+        const count = document.getElementById('count');
+        const price = document.getElementById('totalPrice');
+        count.innerText = cart.length;
+        
+        if(cart.length === 0) {
+            items.innerHTML = "Your bag is empty!";
+            price.innerText = "0";
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+        cart.forEach((item, i) => {
+            html += `<div class="cart-item">
+                <span>${item.name}</span>
+                <span>₹${item.price} <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="remove(${i})"></i></span>
+            </div>`;
+            total += item.price;
+        });
+        items.innerHTML = html;
+        price.innerText = total;
+    }
+
+    function remove(i) {
+        cart.splice(i, 1);
+        updateCart();
+    }
+
+    function sendToWA() {
+        const name = document.getElementById('uName').value;
+        const phone = document.getElementById('uPhone').value;
+        const addr = document.getElementById('uAddr').value;
+        const total = document.getElementById('totalPrice').innerText;
+
+        if(!name || !phone || !addr || cart.length === 0) {
+            alert("Please complete the form!"); return;
+        }
+
+        let itemStr = "";
+        cart.forEach((item, i) => { itemStr += `${i+1}. ${item.name}%0A`; });
+
+        const msg = `*NEW JEWELLERY ORDER*%0A%0A*Name:* ${name}%0A*Address:* ${addr}%0A%0A*Items:*%0A${itemStr}%0A*Total Bill:* ₹${total}%0A*Payment:* COD Order`;
+        window.open(`https://wa.me/9103803607?text=${msg}`);
+    }
+</script>
+
+</body>
+</html>
