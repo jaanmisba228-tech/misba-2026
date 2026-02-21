@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misba Gazi | Mega Fashion Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --pink: #ff2d75; --dark: #1a1a1a; --gold: #d4af37; --bg: #fdfdfd; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg); color: var(--dark); scroll-behavior: smooth; }
+
+        /* Navigation */
+        header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        .logo { font-size: 22px; font-weight: 800; color: var(--pink); text-transform: uppercase; letter-spacing: 1px; }
+        .cart-btn { position: relative; cursor: pointer; font-size: 22px; border: none; background: none; }
+        .cart-count { position: absolute; top: -8px; right: -10px; background: var(--pink); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; }
+
+        /* Sidebar Menu */
+        #menuSidebar { position: fixed; left: -300px; top: 0; width: 280px; height: 100%; background: var(--dark); color: white; z-index: 3000; transition: 0.4s; padding: 40px 20px; }
+        #menuSidebar.active { left: 0; }
+        #menuSidebar ul { list-style: none; margin-top: 30px; }
+        #menuSidebar li { padding: 15px 0; border-bottom: 1px solid #333; }
+        #menuSidebar a { color: white; text-decoration: none; font-size: 18px; display: block; }
+
+        /* Sections */
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .section-title { margin: 50px 0 20px; font-size: 26px; font-weight: 700; border-left: 6px solid var(--pink); padding-left: 15px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Grid & Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .badge { position: absolute; top: 10px; left: 10px; background: var(--pink); color: white; padding: 4px 10px; border-radius: 5px; font-size: 11px; font-weight: bold; z-index: 5; }
+        .anti-badge { background: #00b894; }
+
+        .img-box { height: 320px; width: 100%; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .p-info { padding: 15px; text-align: center; }
+        .p-price { color: var(--pink); font-size: 20px; font-weight: 700; margin: 5px 0; }
+        .size-sel { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd; }
+        .add-btn { background: var(--dark); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .add-btn:hover { background: var(--pink); }
+
+        /* Cart Sidebar */
+        #cartSidebar { position: fixed; right: -100%; top: 0; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.1); overflow-y: auto; }
+        #cartSidebar.active { right: 0; }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+
+        /* Order Form */
+        .order-form { background: #fff1f5; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        .order-form input, .order-form textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .wa-btn { background: #25D366; color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 50px 20px; margin-top: 50px; }
+        .overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1500; }
+        .overlay.active { display:block; }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<div id="menuSidebar">
+    <span style="float:right; cursor:pointer; font-size:24px;" onclick="toggleMenu()">&times;</span>
+    <h2 style="color:var(--pink); margin-bottom:20px;">CATEGORIES</h2>
+    <ul>
+        <li><a href="#outfits" onclick="toggleMenu()">👗 Designer Outfits</a></li>
+        <li><a href="#shoes" onclick="toggleMenu()">👠 Luxury Footwear</a></li>
+        <li><a href="#anti-tarnish" onclick="toggleMenu()">✨ Anti-Tarnish Jewellery</a></li>
+        <li><a href="#earrings" onclick="toggleMenu()">💍 Earrings & Rings</a></li>
+        <li><a href="#socks" onclick="toggleMenu()">🧦 Socks & Scarfs</a></li>
+        <li><a href="#frames" onclick="toggleMenu()">🖼️ Photo Frames</a></li>
+    </ul>
+</div>
+
+<header>
+    <div class="nav-left">
+        <i class="fas fa-bars" onclick="toggleMenu()" style="cursor:pointer; font-size:20px;"></i>
+        <div class="logo">Misba Gazi</div>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count" id="count">0</span>
+    </button>
+</header>
+
+<div class="container">
+
+    <section id="outfits">
+        <div class="section-title">Designer <span>Outfits</span></div>
+        <div class="grid">
+            <div class="card">
+                <div class="badge">BESTSELLER</div>
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400"></div>
+                <div class="p-info">
+                    <h3>Premium Party Gown</h3>
+                    <div class="p-price">₹2,999</div>
+                    <select class="size-sel" id="o1"><option>S</option><option>M</option><option>L</option></select>
+                    <button class="add-btn" onclick="addToCart('Party Gown', 2999, 'o1')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="anti-tarnish">
+        <div class="section-title">Anti-Tarnish <span>Jewellery</span></div>
+        <div class="grid">
+            <div class="card">
+                <div class="badge anti-badge">WATERPROOF</div>
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400"></div>
+                <div class="p-info">
+                    <h3>Evil Eye Gold Necklace</h3>
+                    <div class="p-price">₹1,250</div>
+                    <select class="size-sel" id="j1"><option>Free Size</option></select>
+                    <button class="add-btn" onclick="addToCart('Anti-Tarnish Necklace', 1250, 'j1')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="earrings">
+        <div class="section-title">Earrings & <span>Rings</span></div>
+        <div class="grid">
+            <div class="card">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400"></div>
+                <div class="p-info">
+                    <h3>Korean Pearl Earrings</h3>
+                    <div class="p-price">₹450</div>
+                    <select class="size-sel" id="e1"><option>One Size</option></select>
+                    <button class="add-btn" onclick="addToCart('Pearl Earrings', 450, 'e1')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shoes">
+        <div class="section-title">Luxury <span>Footwear</span></div>
+        <div class="grid">
+            <div class="card">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"></div>
+                <div class="p-info">
+                    <h3>Crystal High Heels</h3>
+                    <div class="p-price">₹2,499</div>
+                    <select class="size-sel" id="sh1"><option>UK 4</option><option>UK 5</option><option>UK 6</option></select>
+                    <button class="add-btn" onclick="addToCart('Crystal Heels', 2499, 'sh1')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="socks">
+        <div class="section-title">Socks & <span>Scarfs</span></div>
+        <div class="grid">
+            <div class="card">
+                <div class="img-box"><img src="https://images.unsplash.com/photo-1582966272600-dacbfef1e7a4?w=400"></div>
+                <div class="p-info">
+                    <h3>Winter Silk Scarf</h3>
+                    <div class="p-price">₹499</div>
+                    <select class="size-sel" id="sc1"><option>One Size</option></select>
+                    <button class="add-btn" onclick="addToCart('Silk Scarf', 499, 'sc1')">Add to Bag</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<div id="cartSidebar">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>My Shopping Bag</h3>
+        <span onclick="toggleCart()" style="cursor:pointer; font-size:24px;">&times;</span>
+    </div>
+    <div id="cartItems" style="margin-top:20px;"></div>
+    <h4 style="margin:20px 0;">Total: ₹<span id="totalPrice">0</span></h4>
+    
+    <div class="order-form">
+        <h4>Shipping Details</h4>
+        <input type="text" id="custName" placeholder="Full Name">
+        <input type="tel" id="custPhone" placeholder="Mobile Number">
+        <textarea id="custAddr" placeholder="Full Delivery Address"></textarea>
+        <button class="wa-btn" onclick="sendToWA()">Confirm Order on WhatsApp</button>
+    </div>
+</div>
+
+<footer>
+    <h2 style="color:var(--pink);">MISBA GAZI</h2>
+    <p>Premium Girls Fashion & Jewellery Boutique</p><br>
+    <div style="font-size:20px; display:flex; justify-content:center; gap:20px;">
+        <i class="fab fa-instagram"></i> <i class="fab fa-whatsapp"></i>
+    </div><br>
+    <p style="font-size:11px; opacity:0.5;">&copy; 2026 Misba Gazi Store. All Rights Reserved.</p>
+</footer>
+
+<script>
+    let cart = [];
+
+    function toggleMenu() {
+        document.getElementById('menuSidebar').classList.toggle('active');
+        document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function toggleCart() {
+        document.getElementById('cartSidebar').classList.toggle('active');
+        document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function closeAll() {
+        document.getElementById('menuSidebar').classList.remove('active');
+        document.getElementById('cartSidebar').classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+    }
+
+    function addToCart(name, price, sizeId) {
+        const size = document.getElementById(sizeId).value;
+        cart.push({name, price, size});
+        renderCart();
+        toggleCart();
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cartItems');
+        const count = document.getElementById('count');
+        const priceDisp = document.getElementById('totalPrice');
+        count.innerText = cart.length;
+        
+        if(cart.length === 0) {
+            list.innerHTML = "Your bag is empty!";
+            priceDisp.innerText = "0";
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+        cart.forEach((item, i) => {
+            html += `<div class="cart-item">
+                <span>${item.name} (${item.size})</span>
+                <span>₹${item.price} <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="remove(${i})"></i></span>
+            </div>`;
+            total += item.price;
+        });
+        list.innerHTML = html;
+        priceDisp.innerText = total;
+    }
+
+    function remove(i) { cart.splice(i, 1); renderCart(); }
+
+    function sendToWA() {
+        const name = document.getElementById('custName').value;
+        const phone = document.getElementById('custPhone').value;
+        const addr = document.getElementById('custAddr').value;
+        const total = document.getElementById('totalPrice').innerText;
+
+        if(!name || !phone || !addr || cart.length === 0) {
+            alert("Please complete the form!"); return;
+        }
+
+        let itemStr = "";
+        cart.forEach((item, i) => { itemStr += `${i+1}. ${item.name} (${item.size})%0A`; });
+
+        const msg = `*NEW MEGA ORDER - MISBA GAZI*%0A%0A*Customer:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${addr}%0A%0A*Items:*%0A${itemStr}%0A*Total Bill:* ₹${total}%0A*Payment:* COD`;
+        window.open(`https://wa.me/9103803607?text=${msg}`);
+    }
+</script>
+
+</body>
+</html>
