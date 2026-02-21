@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misba Gazi | The Complete Girls Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --pink: #ff2d75; --dark: #1a1a1a; --light: #fdf2f5; --gold: #f39c12; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #fff; color: var(--dark); overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* Header & Navigation */
+        header { background: white; padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        .menu-btn { font-size: 22px; cursor: pointer; }
+        .logo { font-size: 22px; font-weight: 800; color: var(--pink); text-transform: uppercase; letter-spacing: 1px; }
+        .nav-icons { display: flex; gap: 20px; align-items: center; }
+        .nav-icons i { font-size: 20px; cursor: pointer; transition: 0.3s; }
+        .nav-icons i:hover { color: var(--pink); }
+        .cart-count { position: absolute; top: -5px; right: -8px; background: var(--pink); color: white; font-size: 10px; padding: 2px 5px; border-radius: 50%; }
+
+        /* Sidebars */
+        .sidebar { position: fixed; top: 0; height: 100%; width: 280px; background: white; z-index: 2000; transition: 0.5s; padding: 30px 20px; box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
+        #menuSidebar { left: -300px; background: var(--dark); color: white; }
+        #menuSidebar.active { left: 0; }
+        #cartSidebar { right: -400px; width: 350px; }
+        #cartSidebar.active { right: 0; }
+        
+        .sidebar-close { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; }
+        .side-nav-links { list-style: none; margin-top: 50px; }
+        .side-nav-links li { padding: 15px 0; border-bottom: 1px solid #333; }
+        .side-nav-links a { color: white; text-decoration: none; font-size: 18px; }
+
+        /* Hero Banner */
+        .hero { background: var(--light); padding: 40px 5%; text-align: center; }
+        .hero h1 { font-size: 32px; margin-bottom: 10px; }
+
+        /* Sections */
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin: 40px 0 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        
+        /* Product Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #f0f0f0; transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .wishlist-heart { position: absolute; top: 15px; right: 15px; color: #ccc; cursor: pointer; z-index: 10; }
+        .wishlist-heart.active { color: var(--pink); }
+        .img-container { height: 300px; width: 100%; overflow: hidden; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .card-info { padding: 15px; text-align: center; }
+        .rating { color: var(--gold); font-size: 12px; margin-bottom: 5px; }
+        .price { font-size: 18px; font-weight: 700; color: var(--pink); margin: 8px 0; }
+        .size-box { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; font-size: 12px; }
+        .add-btn { background: var(--dark); color: white; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; font-weight: 600; }
+        .add-btn:hover { background: var(--pink); }
+
+        /* Cart & Form */
+        .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0; }
+        .order-form { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px; }
+        .order-form input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .whatsapp-btn { background: #25D366; color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+        footer { background: var(--dark); color: white; padding: 50px 5%; text-align: center; margin-top: 100px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: left; margin-bottom: 30px; }
+        
+        @media (max-width: 600px) { #cartSidebar { width: 100%; } }
+    </style>
+</head>
+<body>
+
+<div id="menuSidebar" class="sidebar">
+    <span class="sidebar-close" onclick="closeSidebars()">&times;</span>
+    <h2 style="color:var(--pink)">MISBA GAZI</h2>
+    <ul class="side-nav-links">
+        <li><a href="#outfits" onclick="closeSidebars()">👗 Outfits</a></li>
+        <li><a href="#shoes" onclick="closeSidebars()">👠 Footwear</a></li>
+        <li><a href="#jewellery" onclick="closeSidebars()">💍 Jewellery</a></li>
+        <li><a href="#socks" onclick="closeSidebars()">🧦 Socks & Scarfs</a></li>
+        <li><a href="#frames" onclick="closeSidebars()">🖼️ Photo Frames</a></li>
+    </ul>
+</div>
+
+<div id="cartSidebar" class="sidebar">
+    <span class="sidebar-close" onclick="closeSidebars()">&times;</span>
+    <h3>Shopping Bag</h3>
+    <div id="cartContent" style="margin: 20px 0; max-height: 400px; overflow-y: auto;"></div>
+    <h4>Total: ₹<span id="totalPrice">0</span></h4>
+    
+    <div class="order-form">
+        <input type="text" id="custName" placeholder="Full Name">
+        <input type="tel" id="custPhone" placeholder="Mobile Number">
+        <textarea id="custAddr" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ddd;" placeholder="Full Delivery Address"></textarea>
+        <button class="whatsapp-btn" onclick="sendOrder()">Place COD Order</button>
+    </div>
+</div>
+
+<header>
+    <div class="nav-left">
+        <i class="fas fa-bars menu-btn" onclick="openMenu()"></i>
+        <div class="logo">Misba Gazi</div>
+    </div>
+    <div class="nav-icons">
+        <i class="fas fa-search"></i>
+        <i class="far fa-heart"></i>
+        <div style="position:relative" onclick="openCart()">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </div>
+</header>
+
+<div class="hero">
+    <h1>Big Billion Sale is LIVE!</h1>
+    <p>Everything you love at 50% OFF</p>
+</div>
+
+<div class="container">
+    <div class="section-header" id="outfits">
+        <h2>Girls Outfits</h2>
+        <a href="#" style="color:var(--pink)">View All</a>
+    </div>
+    <div class="grid">
+        <div class="card">
+            <i class="fas fa-heart wishlist-heart" onclick="this.classList.toggle('active')"></i>
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400"></div>
+            <div class="card-info">
+                <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> (150)</div>
+                <h3>Designer Party Gown</h3>
+                <div class="price">₹1,499</div>
+                <select id="s1" class="size-box"><option>S</option><option>M</option><option>L</option></select>
+                <button class="add-btn" onclick="addToCart('Party Gown', 1499, 's1')">Add to Bag</button>
+            </div>
+        </div>
+        </div>
+
+    <div class="section-header" id="shoes">
+        <h2>Luxury Footwear</h2>
+    </div>
+    <div class="grid">
+        <div class="card">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"></div>
+            <div class="card-info">
+                <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i> (85)</div>
+                <h3>Crystal High Heels</h3>
+                <div class="price">₹2,100</div>
+                <select id="s2" class="size-box"><option>UK 4</option><option>UK 5</option><option>UK 6</option></select>
+                <button class="add-btn" onclick="addToCart('High Heels', 2100, 's2')">Add to Bag</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header" id="jewellery">
+        <h2>Designer Jewellery</h2>
+    </div>
+    <div class="grid">
+        <div class="card">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1535633302723-99e393e44a5e?w=400"></div>
+            <div class="card-info">
+                <h3>Kundan Necklace Set</h3>
+                <div class="price">₹899</div>
+                <select id="s3" class="size-box"><option>Free Size</option></select>
+                <button class="add-btn" onclick="addToCart('Necklace Set', 899, 's3')">Add to Bag</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h4>Misba Gazi Store</h4>
+            <p>India's Premium Online Boutique for Girls.</p>
+        </div>
+        <div>
+            <h4>Help</h4>
+            <p>Shipping Info<br>Returns<br>Contact Us</p>
+        </div>
+        <div>
+            <h4>Follow Us</h4>
+            <div style="font-size:20px; gap:10px; display:flex; margin-top:10px;">
+                <i class="fab fa-instagram"></i><i class="fab fa-facebook"></i><i class="fab fa-whatsapp"></i>
+            </div>
+        </div>
+    </div>
+    <hr style="opacity:0.2"><br>
+    <p>&copy; 2026 MISBA GAZI | All Payments via COD</p>
+</footer>
+
+<script>
+    let cart = [];
+
+    function openMenu() { document.getElementById('menuSidebar').classList.add('active'); }
+    function openCart() { document.getElementById('cartSidebar').classList.add('active'); }
+    function closeSidebars() { 
+        document.getElementById('menuSidebar').classList.remove('active'); 
+        document.getElementById('cartSidebar').classList.remove('active'); 
+    }
+
+    function addToCart(name, price, sizeId) {
+        let size = document.getElementById(sizeId).value;
+        cart.push({name, price, size});
+        renderCart();
+        openCart();
+    }
+
+    function renderCart() {
+        const content = document.getElementById('cartContent');
+        const count = document.getElementById('cartCount');
+        const totalDisp = document.getElementById('totalPrice');
+        count.innerText = cart.length;
+        
+        if(cart.length === 0) {
+            content.innerHTML = "Your bag is empty.";
+            totalDisp.innerText = "0";
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+        cart.forEach((item, i) => {
+            html += `<div class="cart-item">
+                <span>${item.name} (${item.size})</span>
+                <span>₹${item.price} <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="remove(${i})"></i></span>
+            </div>`;
+            total += item.price;
+        });
+        content.innerHTML = html;
+        totalDisp.innerText = total;
+    }
+
+    function remove(i) { cart.splice(i,1); renderCart(); }
+
+    function sendOrder() {
+        const name = document.getElementById('custName').value;
+        const phone = document.getElementById('custPhone').value;
+        const addr = document.getElementById('custAddr').value;
+        const total = document.getElementById('totalPrice').innerText;
+
+        if(!name || !phone || !addr || cart.length === 0) {
+            alert("Please fill all details!"); return;
+        }
+
+        let items = "";
+        cart.forEach((item, i) => { items += `${i+1}. ${item.name} (${item.size})%0A`; });
+
+        const msg = `*NEW ORDER - MISBA GAZI*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Address:* ${addr}%0A%0A*Items:*%0A${items}%0A*Total:* ₹${total}%0A*Payment:* Cash on Delivery`;
+        window.open(`https://wa.me/9103803607?text=${msg}`);
+    }
+</script>
+
+</body>
+</html>
